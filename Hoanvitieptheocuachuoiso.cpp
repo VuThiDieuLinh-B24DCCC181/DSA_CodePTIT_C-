@@ -1,5 +1,3 @@
-// Nơi để code test linh tinh của Linh
-
 #include <bits/stdc++.h>
 using namespace std;
 
