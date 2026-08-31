@@ -16,9 +16,9 @@ int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int t;
+    int t;  
     cin >> t;
-    while(t--) {
+    while(t--) {   
         int n;
         cin >> n;
         for (int i=0;i<pow(2,n);i++){

@@ -1,42 +1,43 @@
 // Nơi để code test linh tinh của Linh
 
+
 #include <bits/stdc++.h>
 using namespace std;
 
-int n,m;
-char a[1005][1005];
-
-int dx[]= {-1,1,0,0};
-int dy[] = {0,0,1,-1};
-
-void dfs(int x,int y) {
-    a[x][y] = '.';
-    for (int i=0;i<4;i++) {
-        int nx = x +dx[i];
-        int ny = y +dy[i];
-        if (nx>=0 && nx<n && ny>=0 && ny<m && a[nx][ny] == '#') {
-            dfs(nx,ny);
-        }
-    }
-}
-
 int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
+    cin.tie(0);
+    ios_base::sync_with_stdio(false);
+    cout.tie(0);
 
-    cin >> n >> m;
-    for (int i=0;i<n;i++) {
-        for (int j=0;j<m;j++) cin >> a[i][j];
+    int n, k;
+    cin >> n >> k;
+
+    vector<string> M(n);
+
+    for (int i = 0; i < n; i++) {
+        cin >> M[i];
     }
 
-    int count =0;
-    for (int i=0;i<n;i++) {
-        for (int j=0;j<m;j++) {
-            if (a[i][j]=='#') {
-                count++;
-                dfs(i,j);
+    sort(M.begin(), M.end());
+
+    M.erase(unique(M.begin(), M.end()), M.end());
+
+    n = M.size();
+
+    string s = string(k, '0') + string(n - k, '1');
+
+    do {
+        for (int i = 0; i < n; i++) {
+            if (s[i] == '0') {
+                cout << M[i] << " ";
             }
         }
-    }
-    cout << count << "\n";
+
+        cout << endl;
+
+    } while (next_permutation(s.begin(), s.end()));
+
+    return 0;
 }
+
+
