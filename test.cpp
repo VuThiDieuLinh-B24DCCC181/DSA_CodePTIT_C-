@@ -4,40 +4,53 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int main() {
-    cin.tie(0);
-    ios_base::sync_with_stdio(false);
-    cout.tie(0);
+string res;
 
-    int n, k;
-    cin >> n >> k;
+void Try(string s, int k) {
+    if (k == 0)
+        return;
 
-    vector<string> M(n);
+    for (int i = 0; i < s.size(); i++) {
+        for (int j = i + 1; j < s.size(); j++) {
 
-    for (int i = 0; i < n; i++) {
-        cin >> M[i];
-    }
+            if (s[i] < s[j]) {
 
-    sort(M.begin(), M.end());
+                // Đổi chỗ 2 chữ số
+                swap(s[i], s[j]);
 
-    M.erase(unique(M.begin(), M.end()), M.end());
+                // Cập nhật kết quả lớn nhất
+                res = max(res, s);
 
-    n = M.size();
+                // Tiếp tục thử với k - 1 lần đổi còn lại
+                Try(s, k - 1);
 
-    string s = string(k, '0') + string(n - k, '1');
-
-    do {
-        for (int i = 0; i < n; i++) {
-            if (s[i] == '0') {
-                cout << M[i] << " ";
+                // Quay lại trạng thái ban đầu
+                swap(s[i], s[j]);
             }
         }
+    }
+}
 
-        cout << endl;
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
 
-    } while (next_permutation(s.begin(), s.end()));
+    int t;
+    cin >> t;
+
+    while (t--) {
+        int n;
+        cin >> n;
+
+        string s;
+        cin >> s;
+
+        res = s;
+
+        Try(s, n);
+
+        cout << res << endl;
+    }
 
     return 0;
 }
-
-
