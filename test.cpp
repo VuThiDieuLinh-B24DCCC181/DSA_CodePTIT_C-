@@ -1,56 +1,41 @@
 // Nơi để code test linh tinh của Linh
 
 
-#include <bits/stdc++.h>
+#include<iostream>
+#include<vector>
+#include<algorithm>
 using namespace std;
-
-string res;
-
-void Try(string s, int k) {
-    if (k == 0)
-        return;
-
-    for (int i = 0; i < s.size(); i++) {
-        for (int j = i + 1; j < s.size(); j++) {
-
-            if (s[i] < s[j]) {
-
-                // Đổi chỗ 2 chữ số
-                swap(s[i], s[j]);
-
-                // Cập nhật kết quả lớn nhất
-                res = max(res, s);
-
-                // Tiếp tục thử với k - 1 lần đổi còn lại
-                Try(s, k - 1);
-
-                // Quay lại trạng thái ban đầu
-                swap(s[i], s[j]);
-            }
-        }
-    }
+typedef long long ll;
+ll cnt = 0, sum = 0;
+int n, k;
+int M[100];
+bool ok;
+void Try(int j) {
+	if (ok == true)return;
+	for (int i = 1; i >= 0; i--) {
+		sum += M[j]*i;
+		cnt += i;
+		if (sum == k) {
+			ok = true;
+			cout << cnt << endl;
+			return;
+		}
+		if (sum < k && j < n - 1)Try(j + 1);
+		sum -= M[j]*i;
+		cnt -= i;
+	}
 }
 
 int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-
-    int t;
-    cin >> t;
-
-    while (t--) {
-        int n;
-        cin >> n;
-
-        string s;
-        cin >> s;
-
-        res = s;
-
-        Try(s, n);
-
-        cout << res << endl;
-    }
-
-    return 0;
+	int t; cin >> t;
+	while (t--) {
+		ok = false;
+		cnt = 0; sum = 0;
+		cin >> n >> k;
+		for (int i = 0; i < n; i++)cin >> M[i];
+		sort(M, M + n, greater<>());
+		Try(0);
+		if(!ok)
+		cout << -1 << endl;
+	}
 }
