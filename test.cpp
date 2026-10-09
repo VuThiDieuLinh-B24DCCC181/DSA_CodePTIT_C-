@@ -1,41 +1,50 @@
 // Nơi để code test linh tinh của Linh
 
-
-#include<iostream>
-#include<vector>
-#include<algorithm>
+#include <bits/stdc++.h>
 using namespace std;
-typedef long long ll;
-ll cnt = 0, sum = 0;
-int n, k;
-int M[100];
-bool ok;
-void Try(int j) {
-	if (ok == true)return;
-	for (int i = 1; i >= 0; i--) {
-		sum += M[j]*i;
-		cnt += i;
-		if (sum == k) {
-			ok = true;
-			cout << cnt << endl;
-			return;
-		}
-		if (sum < k && j < n - 1)Try(j + 1);
-		sum -= M[j]*i;
-		cnt -= i;
-	}
+
+int n;
+vector<string> S;
+int M[105][105];
+bool check[105][105];
+
+void Try(int x,int y, string s) {
+    if(M[x][y] == 0 || check[x][y]) return;
+    if(x >= n || x < 0 || y >=n || y<0) return ;
+
+    if(x==n-1 && y==n-1) {
+        S.push_back(s);
+        return;
+    }
+
+    check[x][y] = true;
+    Try(x+1,y,s+"D");
+    Try(x-1,y,s+"U");
+    Try(x,y+1,s+"R");
+    Try(x,y-1,s+"L");
+
+    check[x][y] = false;
+
 }
 
 int main() {
-	int t; cin >> t;
-	while (t--) {
-		ok = false;
-		cnt = 0; sum = 0;
-		cin >> n >> k;
-		for (int i = 0; i < n; i++)cin >> M[i];
-		sort(M, M + n, greater<>());
-		Try(0);
-		if(!ok)
-		cout << -1 << endl;
-	}
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int t; cin >> t;
+    while(t--) {
+        cin >> n;
+        S.clear();
+        for(int i=0;i<n;i++) {
+            for(int j=0;j<n;j++) cin >> M[i][j];
+        }
+
+        Try(0,0,"");
+        if(S.size() == 0) cout << "-1\n";
+        else {
+            sort(S.begin(),S.end());
+            for(auto c : S) cout << c << " ";
+            cout << "\n";
+        }
+    }
 }
