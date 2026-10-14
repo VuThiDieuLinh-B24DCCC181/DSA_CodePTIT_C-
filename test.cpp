@@ -3,48 +3,43 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int n;
-vector<string> S;
-int M[105][105];
-bool check[105][105];
+long long n,s;
+int M[1005] ;
+bool ok;
+long long sum,cnt;
 
-void Try(int x,int y, string s) {
-    if(M[x][y] == 0 || check[x][y]) return;
-    if(x >= n || x < 0 || y >=n || y<0) return ;
+void Try(int j) {
+    if(ok) return;
+    for(int i=1;i>=0;i--) {
+        sum+= M[j]*i;
+        cnt+= 1*i;
 
-    if(x==n-1 && y==n-1) {
-        S.push_back(s);
-        return;
+        if(sum == s) {
+            ok = true;
+            cout << cnt << "\n";
+            return;
+        } else if (sum < s && j<n-1) Try(j+1);
+
+        sum-= M[j]*i;
+        cnt-= 1*i;
     }
-
-    check[x][y] = true;
-    Try(x+1,y,s+"D");
-    Try(x-1,y,s+"U");
-    Try(x,y+1,s+"R");
-    Try(x,y-1,s+"L");
-
-    check[x][y] = false;
-
 }
+
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int t; cin >> t;
+    int t;cin >> t;
     while(t--) {
-        cin >> n;
-        S.clear();
-        for(int i=0;i<n;i++) {
-            for(int j=0;j<n;j++) cin >> M[i][j];
-        }
+        cin >> n >> s;
+        for(int i=0;i<n;i++) cin >> M[i];
+        sort(M,M+n,greater<int>());
 
-        Try(0,0,"");
-        if(S.size() == 0) cout << "-1\n";
-        else {
-            sort(S.begin(),S.end());
-            for(auto c : S) cout << c << " ";
-            cout << "\n";
-        }
+        ok = false;
+        sum =0; cnt=0;
+        Try(0);
+        if(!ok) cout<< "-1\n";
+       
     }
 }

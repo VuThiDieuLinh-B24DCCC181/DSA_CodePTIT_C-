@@ -21,14 +21,7 @@ int main() {
             return abs(left - x) < abs(right - x);
         });
 
-        for (int i = 0; i < n; ++i) {
-            if (i > 0) {
-                cout << ' ';
-            }
-            cout << a[i];
-        }
-        cout << '\n';
+        for(auto c : a) cout << c << " ";
+        cout << "\n";
     }
-
-    return 0;
 }
