@@ -25,11 +25,7 @@ int main() {
             for (int i=0;i<n;i++) {
                 if (s[i] == '1' && x[i]== '0') sum++;
             }
-        } else {
-            for (int i=0;i<n;i++) {
-                if(x[i] == '0') sum++;
-            }
-        }
+        } else sum = k;
         cout << sum << "\n";
     }
 } 

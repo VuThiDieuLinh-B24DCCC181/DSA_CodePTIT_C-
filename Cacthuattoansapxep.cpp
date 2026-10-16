@@ -15,18 +15,10 @@ int main() {
         int n;
         cin >> n;
         vector<int> a(n);
-        for (int i=0; i<n; i++) {
-            cin >> a[i];
-        }
+        for (int i=0; i<n; i++) cin >> a[i];
         sort(a.begin(),a.end());
 
-        for (int i=0;i<n;i++){
-            if (i>0) {
-                cout << " ";
-            }
-            cout << a[i];
-        }
+        for(auto c : a) cout << c << " ";
         cout << "\n";
     }
-    return 0;
 }
