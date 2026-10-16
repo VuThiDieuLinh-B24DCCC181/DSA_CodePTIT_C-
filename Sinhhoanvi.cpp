@@ -2,9 +2,9 @@
 using namespace std;
 
 int main() {
-    int t;
+    int t; // t=2 
     cin >> t;
-    while (t--) {
+    while(t--) { 
         int n;
         cin >> n ;
         vector<int> M(n);
