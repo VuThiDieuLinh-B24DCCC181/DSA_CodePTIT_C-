@@ -8,18 +8,10 @@ int main() {
     int t;
     cin >> t;
     while (t--) {
-        int n,k;
-        cin >> n >> k;
-        for (int i=0;i<pow(2,n);i++) {
-            auto s = bitset<20>(i).to_string();
-            s= s.substr(20-n,n);
-            int sum =0;
-            for (int j=0;j<n;j++) {
-                if (s[j] == '1') sum++;
-            }
-            if (sum == k) {
-                cout << s << "\n";
-            }
-        }
+        int n,k; cin >> n >> k;
+        string s = string (n-k,'0') + string(k,'1');
+        do{
+            cout << s << "\n";
+        }while (next_permutation(s.begin(),s.end()));
     }
 }

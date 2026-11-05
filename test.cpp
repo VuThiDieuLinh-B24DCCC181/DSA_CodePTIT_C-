@@ -1,45 +1,73 @@
 // Nơi để code test linh tinh của Linh
 
+
 #include <bits/stdc++.h>
 using namespace std;
 
-long long n,s;
-int M[1005] ;
-bool ok;
-long long sum,cnt;
-
-void Try(int j) {
-    if(ok) return;
-    for(int i=1;i>=0;i--) {
-        sum+= M[j]*i;
-        cnt+= 1*i;
-
-        if(sum == s) {
-            ok = true;
-            cout << cnt << "\n";
-            return;
-        } else if (sum < s && j<n-1) Try(j+1);
-
-        sum-= M[j]*i;
-        cnt-= 1*i;
-    }
+int priority(char c) {
+    if (c == '+' || c == '-') return 1;
+    if (c == '*' || c == '/') return 2;
+    return 0;
 }
 
-
 int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
 
-    int t;cin >> t;
-    while(t--) {
-        cin >> n >> s;
-        for(int i=0;i<n;i++) cin >> M[i];
-        sort(M,M+n,greater<int>());
+    string P;
+    getline(cin, P);
 
-        ok = false;
-        sum =0; cnt=0;
-        Try(0);
-        if(!ok) cout<< "-1\n";
-       
+    stack<char> st;
+    string Out = "";
+
+    for (char x : P) {
+        // Buoc 2.1: Neu x la dau mo ngoac
+        if (x == '(') {
+            st.push(x);
+        }
+
+        // Bo qua khoang trang
+        else if (x == ' ') {
+            continue;
+        }
+
+        // Buoc 2.2: Neu x la toan hang
+        else if (isalnum(x)) {
+            Out += x;
+        }
+
+        // Buoc 2.3: Neu x la toan tu
+        else if (x == '+' || x == '-' || x == '*' || x == '/') {
+            while (!st.empty() && st.top() != '(' &&
+                   priority(st.top()) >= priority(x)) {
+                Out += st.top();
+                st.pop();
+            }
+
+            st.push(x);
+        }
+
+        // Buoc 2.4: Neu x la dau dong ngoac
+        else if (x == ')') {
+            while (!st.empty() && st.top() != '(') {
+                Out += st.top();
+                st.pop();
+            }
+
+            if (!st.empty()) {
+                st.pop(); // Bo dau '('
+            }
+        }
     }
+
+    // Buoc 3: Lay cac toan tu con lai trong stack
+    while (!st.empty()) {
+        Out += st.top();
+        st.pop();
+    }
+
+    // Buoc 4: In ket qua
+    cout << Out << '\n';
+
+    return 0;
 }

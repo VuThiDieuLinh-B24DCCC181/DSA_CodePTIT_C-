@@ -1,27 +1,25 @@
-#include<iostream>
-#include<algorithm>
-#include<vector>
-#include<set>
+#include <bits/stdc++.h>
 using namespace std;
-typedef long long int ll;
 int main() {
-	int t; cin >> t;
-	while (t--) {
-		int m; cin >> m;
-		multiset<ll> M;
-		for (int i = 0; i < m; i++) {
-			int n; cin >> n;
-			M.insert(n);
-		}
-		long long sum = 0;
-		while (M.size() != 1) {
-			ll x = *M.begin();
-			M.erase(M.find(*M.begin()));
-			ll y = *M.begin();
-			M.erase(M.find(*M.begin()));
-			sum += (x + y);
-			M.insert(x + y);
-		}
-		cout << sum << endl;
-	}
+    int t; cin >> t;
+    while (t--) {
+        int n;
+        cin >> n;
+        multiset<long long> M;
+        for (int i=0;i<n;i++) {
+            int x; cin >> x;
+            M.insert(x);
+        }
+
+        long long sum =0;
+        while(M.size() !=1) {
+            long long x = *M.begin();
+            M.erase(M.find(*M.begin()));
+            long long y = *M.begin();
+            M.erase(M.find(*M.begin()));
+            sum += (x+y);
+            M.insert(x+y);
+        }
+        cout << sum << "\n";
+    }
 }
