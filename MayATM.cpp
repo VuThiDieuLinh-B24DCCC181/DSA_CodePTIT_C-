@@ -6,7 +6,6 @@ int M[100];
 long long cnt =0, sum =0;
 bool ok;
 
-
 void Try(int j) {
     if(ok) return;
     for(int i=1;i>=0;i--) {
@@ -33,7 +32,7 @@ int main() {
         for(int i=0;i<n;i++) cin >> M[i];
         ok= false;
         cnt =0;sum =0;
-        
+
         sort(M,M+n,greater<int>());
         Try (0);
         if(!ok) cout << "-1\n";
