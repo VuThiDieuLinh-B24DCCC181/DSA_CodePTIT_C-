@@ -2,66 +2,29 @@
 
 
 
-#include <iostream>
-#include <string>
-#include <vector>
-#include <stack>
-#include <algorithm>
 
+
+#include<iostream>
 using namespace std;
+int seach(int* M, int n, int x) {
+	for (int i = 0; i < n; i++)
+		if (M[i] == x)return i;
+}
+void Duyet(int*M,int n,int*N) {
+	int x = seach(M, n, N[0]);
+	if (x != 0)	Duyet(M, x, N + 1);
+	if (x != n - 1)Duyet(M + x + 1, n - x - 1, N + x + 1);
+	cout << N[0] << " ";
+}
 
 int main() {
-
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-
-    string s;
-    if (!(cin >> s)) {
-        cout << 0 << "\n";
-        return 0;
-    }
-
-    int n = s.length();
-
-    vector<bool> matched(n, false);
-    stack<int> st;
-
-    for (int i = 0; i < n; ++i) {
-        if (s[i] == '(' || s[i] == '[') {
-            st.push(i);
-        } else {
-            if (!st.empty()) {
-                int open_idx = st.top();
-
-                if ((s[open_idx] == '(' && s[i] == ')') || 
-                    (s[open_idx] == '[' && s[i] == ']')) {
-                    matched[open_idx] = true;
-                    matched[i] = true;
-                    st.pop();
-                } else {
-
-                    while (!st.empty()) st.pop();
-                }
-            }
-        }
-    }
-
-    int max_brackets = 0;
-    int current_brackets = 0;
-
-    for (int i = 0; i < n; ++i) {
-        if (matched[i]) {
-            if (s[i] == '[') {
-                current_brackets++;
-            }
-            max_brackets = max(max_brackets, current_brackets);
-        } else {
-            // Khi gặp vị trí không hợp lệ, reset lại bộ đếm đoạn
-            current_brackets = 0;
-        }
-    }
-
-    cout << max_brackets << "\n";
-
-    return 0;
+	int t; cin >> t;
+	while (t--) {
+		int M[1000], N[1000];
+		int n; cin >> n;
+		for (int i = 0; i < n; i++)cin >> M[i];
+		for (int j = 0; j < n; j++)cin >> N[j];
+		Duyet(M, n, N);
+		cout << endl;
+	}
 }
