@@ -1,73 +1,80 @@
 // Nơi để code test linh tinh của Linh
 
 
+
 #include <bits/stdc++.h>
 using namespace std;
 
-int priority(char c) {
-    if (c == '+' || c == '-') return 1;
-    if (c == '*' || c == '/') return 2;
-    return 0;
+struct Node {
+    int data;
+    Node *left, *right;
+};
+
+int search(int *M, int n, int x) {
+    for(int i = 0; i < n; i++) {
+        if(M[i] == x) return i;
+    }
+    return -1;
+}
+
+// Buoc 1: Dung cay tu Inorder va Preorder
+Node* Create(int *M, int n, int *N) {
+    if(n == 0) return NULL;
+
+    int x = search(M, n, N[0]);
+
+    Node* root = new Node;
+    root->data = N[0];
+
+    root->left = Create(M, x, N + 1);
+    root->right = Create(M + x + 1, n - x - 1, N + x + 1);
+
+    return root;
+}
+
+// Buoc 2: Duyet Postorder
+void Postorder(Node* root) {
+    if(root == NULL) return;
+
+    Postorder(root->left);
+    Postorder(root->right);
+
+    cout << root->data << " ";
+}
+
+// Giai phong bo nho
+void DeleteTree(Node* root) {
+    if(root == NULL) return;
+
+    DeleteTree(root->left);
+    DeleteTree(root->right);
+
+    delete root;
 }
 
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
+    int t;
+    cin >> t;
 
-    string P;
-    getline(cin, P);
+    while(t--) {
+        int n;
+        cin >> n;
 
-    stack<char> st;
-    string Out = "";
+        int M[1000], N[1000];
 
-    for (char x : P) {
-        // Buoc 2.1: Neu x la dau mo ngoac
-        if (x == '(') {
-            st.push(x);
-        }
+        for(int i = 0; i < n; i++)
+            cin >> M[i];
 
-        // Bo qua khoang trang
-        else if (x == ' ') {
-            continue;
-        }
+        for(int i = 0; i < n; i++)
+            cin >> N[i];
 
-        // Buoc 2.2: Neu x la toan hang
-        else if (isalnum(x)) {
-            Out += x;
-        }
+        Node* root = Create(M, n, N);
 
-        // Buoc 2.3: Neu x la toan tu
-        else if (x == '+' || x == '-' || x == '*' || x == '/') {
-            while (!st.empty() && st.top() != '(' &&
-                   priority(st.top()) >= priority(x)) {
-                Out += st.top();
-                st.pop();
-            }
+        Postorder(root);
+        cout << "\n";
 
-            st.push(x);
-        }
-
-        // Buoc 2.4: Neu x la dau dong ngoac
-        else if (x == ')') {
-            while (!st.empty() && st.top() != '(') {
-                Out += st.top();
-                st.pop();
-            }
-
-            if (!st.empty()) {
-                st.pop(); // Bo dau '('
-            }
-        }
+        DeleteTree(root);
     }
-
-    // Buoc 3: Lay cac toan tu con lai trong stack
-    while (!st.empty()) {
-        Out += st.top();
-        st.pop();
-    }
-
-    // Buoc 4: In ket qua
-    cout << Out << '\n';
 
     return 0;
 }
