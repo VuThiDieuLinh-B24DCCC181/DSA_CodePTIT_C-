@@ -1,1 +1,0 @@
-{"name":"Local: Nganxep2","url":"d:\\IT\\Projects\\DSA\\DSA_CodePTIT_C-\\Nganxep2.cpp","tests":[{"id":1795546576295,"input":"9\nPUSH 1\nPUSH 2\nPOP\nPRINT\nPUSH 3\nPRINT\nPOP\nPOP\nPRINT","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\IT\\Projects\\DSA\\DSA_CodePTIT_C-\\Nganxep2.cpp","group":"local","local":true}
