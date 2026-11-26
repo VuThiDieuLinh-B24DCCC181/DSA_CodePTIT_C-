@@ -2,43 +2,24 @@
 using namespace std;
 
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-
-    string s;
-    if(!(cin >> s)) {
-        cout << "0\n";
-        return 0;
-    }
-
-    int n = s.length();
-
-    vector<bool> M(n,false);
-    stack<int> S;
-
-    for(int i=0;i<n;i++) {
-        if(s[i] == '(' || s[i] =='[') S.push(i);
-        else {
-            int tmp = S.top();
-            
-            if((s[i] == ')' && s[tmp] == '(') || (s[i] == ']' && s[tmp] == '[') ) {
-                M[i] = true;
-                M[tmp] = true;
-                S.pop();
-            } else {
-                while(!S.empty()) S.pop();
-            }
-        }
-    }
-
-    int maxx =0,cnt=0;
-
-    for(int i=0;i<n;i++) {
-        if(M[i]) {
-            if(s[i] == '[') cnt++;
-            maxx = max(maxx,cnt);
-        } else cnt =0;
-    }
-
-    cout << maxx << "\n";
+	int t; cin >> t;
+	while (t--) {
+		int m, n; cin >> m >> n;
+		vector<int> M(m), N(n);
+		set<int> S, X, Y;
+		for (int i = 0; i < m; i++) {
+			cin >> M[i];
+			S.insert(M[i]);
+			X.insert(M[i]);
+		}
+		for (int i = 0; i < n; i++) {
+			cin >> N[i];
+			S.insert(N[i]);
+			Y.insert(N[i]);
+		}
+		for (auto x : S)cout << x << " ";
+		cout << endl;
+		for (auto x : X)if (Y.count(x) != 0)cout << x << " ";
+		cout << endl;
+	}
 }
