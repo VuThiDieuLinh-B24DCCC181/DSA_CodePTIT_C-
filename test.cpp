@@ -1,73 +1,45 @@
 // Nơi để code test linh tinh của Linh
 
-
 #include <bits/stdc++.h>
 using namespace std;
 
-int priority(char c) {
-    if (c == '+' || c == '-') return 1;
-    if (c == '*' || c == '/') return 2;
-    return 0;
+int n,m; 
+char A[1005][1005];
+
+int dx[] = {-1,1,0,0};
+int dy[] = {0,0,1,-1};
+
+void DFS(int x,int y) {
+    A[x][y] = '.';
+    for(int i=0;i<4;i++) {
+        int nx = x + dx[i];
+        int ny = y + dy[i];
+        if(nx <n && ny <m && nx>=0 && ny>=0 && A[nx][ny] == '#') DFS(nx,ny);
+    }
 }
 
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
 
-    string P;
-    getline(cin, P);
-
-    stack<char> st;
-    string Out = "";
-
-    for (char x : P) {
-        // Buoc 2.1: Neu x la dau mo ngoac
-        if (x == '(') {
-            st.push(x);
-        }
-
-        // Bo qua khoang trang
-        else if (x == ' ') {
-            continue;
-        }
-
-        // Buoc 2.2: Neu x la toan hang
-        else if (isalnum(x)) {
-            Out += x;
-        }
-
-        // Buoc 2.3: Neu x la toan tu
-        else if (x == '+' || x == '-' || x == '*' || x == '/') {
-            while (!st.empty() && st.top() != '(' &&
-                   priority(st.top()) >= priority(x)) {
-                Out += st.top();
-                st.pop();
-            }
-
-            st.push(x);
-        }
-
-        // Buoc 2.4: Neu x la dau dong ngoac
-        else if (x == ')') {
-            while (!st.empty() && st.top() != '(') {
-                Out += st.top();
-                st.pop();
-            }
-
-            if (!st.empty()) {
-                st.pop(); // Bo dau '('
-            }
-        }
+    cin >> n >> m;
+    
+    for(int i=0;i<n;i++) {
+        for(int j=0;j<m;j++) cin >> A[i][j];
     }
 
-    // Buoc 3: Lay cac toan tu con lai trong stack
-    while (!st.empty()) {
-        Out += st.top();
-        st.pop();
+    int sum =0;
+
+    for(int i=0;i<n;i++) {
+        for(int j=0;j<m;j++) {
+            if(A[i][j] == '#') {
+                sum++;
+                DFS(i,j);
+            }
+        }
+        
     }
 
-    // Buoc 4: In ket qua
-    cout << Out << '\n';
-
-    return 0;
+    cout << sum << "\n";
+    
 }
